@@ -1,0 +1,30 @@
+<script setup>
+  const links = [
+    { to: '/search', label: 'Search filters' },
+  ]
+</script>
+
+<template>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">Playground</p>
+        <h1>vue-url-state</h1>
+      </div>
+
+      <nav class="nav">
+        <router-link
+          v-for="link in links"
+          :key="link.to"
+          :to="link.to"
+        >
+          {{ link.label }}
+        </router-link>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <router-view />
+    </main>
+  </div>
+</template>
