@@ -1,0 +1,52 @@
+import { describe, expect, it } from 'vitest'
+import { parseArray, serializeArray } from '../src/codecs/array.js'
+import { parseBoolean, serializeBoolean } from '../src/codecs/boolean.js'
+import { parseNumber, serializeNumber } from '../src/codecs/number.js'
+import { parseString, serializeString } from '../src/codecs/string.js'
+import { getCodec } from '../src/codecs/index.js'
+
+describe('codecs', () => {
+  it('reads string defaults and first array values', () => {
+    expect(parseString(undefined, { defaultValue: '' })).toBe('')
+    expect(parseString(['first', 'second'], { defaultValue: '' })).toBe('first')
+    expect(serializeString('hello')).toBe('hello')
+  })
+
+  it('validates allowed string values', () => {
+    const field = { defaultValue: 'newest', allowedValues: ['newest', 'oldest'] }
+
+    expect(parseString('oldest', field)).toBe('oldest')
+    expect(parseString('invalid', field)).toBe('newest')
+  })
+
+  it('reads valid and invalid numbers', () => {
+    expect(parseNumber('12', { defaultValue: 1 })).toBe(12)
+    expect(parseNumber('0', { defaultValue: 1 })).toBe(0)
+    expect(parseNumber('abc', { defaultValue: 1 })).toBe(1)
+    expect(parseNumber('NaN', { defaultValue: 1 })).toBe(1)
+    expect(parseNumber('-1', { defaultValue: 1, positive: true })).toBe(1)
+    expect(serializeNumber(2.5)).toBe('2.5')
+  })
+
+  it('reads boolean values and defaults', () => {
+    expect(parseBoolean('1', { defaultValue: false })).toBe(true)
+    expect(parseBoolean('0', { defaultValue: true })).toBe(false)
+    expect(parseBoolean('true', { defaultValue: false })).toBe(true)
+    expect(parseBoolean('false', { defaultValue: true })).toBe(false)
+    expect(parseBoolean(undefined, { defaultValue: true })).toBe(true)
+    expect(parseBoolean(undefined, { defaultValue: false })).toBe(false)
+    expect(serializeBoolean(true)).toBe('1')
+    expect(serializeBoolean(false)).toBe('0')
+  })
+
+  it('reads and writes string arrays', () => {
+    expect(parseArray(['one', 'two'], { defaultValue: [] })).toEqual(['one', 'two'])
+    expect(parseArray(undefined, { defaultValue: [] })).toEqual([])
+    expect(serializeArray(['one', 'two'])).toEqual(['one', 'two'])
+    expect(serializeArray([])).toBeNull()
+  })
+
+  it('throws for unknown types', () => {
+    expect(() => getCodec('object')).toThrow('Unsupported URL state type: object')
+  })
+})

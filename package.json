@@ -1,0 +1,33 @@
+{
+  "name": "vue-url-state",
+  "version": "0.1.0",
+  "description": "Minimal Vue 3 composables for keeping reactive state in Vue Router query parameters.",
+  "type": "module",
+  "main": "./dist/vue-url-state.cjs",
+  "module": "./dist/vue-url-state.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-url-state.js",
+      "require": "./dist/vue-url-state.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "build": "vite build"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0 || ^3.5.0",
+    "vue-router": "^4.3.0 || ^4.4.0 || ^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "vite": "^5.4.19",
+    "vitest": "^2.1.9",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1"
+  }
+}
