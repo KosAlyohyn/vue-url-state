@@ -296,10 +296,18 @@ The library is split into small modules:
 - `helpers/` contains schema normalization, query helpers, equality checks, and Vue Router context validation.
 - `composables/` exposes `useUrlParam` and `useUrlState`.
 
+The repository also contains a full demo project in `playground/`:
+
+- `playground/src/pages/SearchFilters.vue` covers strings, booleans, `reset`, and `clear`.
+
+The playground imports the local library source through a Vite alias, so it reflects changes in `src/` immediately.
+
 ## Commands
 
 ```bash
 npm install
 npm run test
 npm run build
+npm run playground:dev
+npm run playground:build
 ```

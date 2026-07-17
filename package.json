@@ -17,7 +17,10 @@
   ],
   "scripts": {
     "test": "vitest run",
-    "build": "vite build"
+    "build": "vite build",
+    "playground:dev": "npm --prefix playground run dev",
+    "playground:build": "npm --prefix playground run build",
+    "playground:preview": "npm --prefix playground run preview"
   },
   "peerDependencies": {
     "vue": "^3.4.0 || ^3.5.0",
