@@ -306,6 +306,12 @@ ESLint checks:
 
 Prettier handles formatting through the root `.prettierrc`.
 
+The repository also contains a full demo project in `playground/`:
+
+- `playground/src/pages/SearchFilters.vue` covers strings, booleans, `reset`, and `clear`.
+
+The playground imports the local library source through a Vite alias, so it reflects changes in `src/` immediately.
+
 ## Commands
 
 ```bash
@@ -316,4 +322,6 @@ npm run format
 npm run format:check
 npm run test
 npm run build
+npm run playground:dev
+npm run playground:build
 ```

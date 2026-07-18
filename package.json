@@ -21,7 +21,10 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "playground:dev": "npm --prefix playground run dev",
+    "playground:build": "npm --prefix playground run build",
+    "playground:preview": "npm --prefix playground run preview"
   },
   "peerDependencies": {
     "vue": "^3.4.0 || ^3.5.0",
