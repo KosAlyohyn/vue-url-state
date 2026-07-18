@@ -1,6 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
+
 import { useUrlState } from '../src/index.js'
+
 import { createHarness, flushRouter } from './test-utils.js'
 
 function schema() {
@@ -34,7 +36,9 @@ function schema() {
 
 describe('useUrlState', () => {
   it('exposes fields as refs with parsed values', async () => {
-    const { run } = await createHarness('/?search=hello&page=3&enabled=1&tags[]=one&tags[]=two&order=oldest')
+    const { run } = await createHarness(
+      '/?search=hello&page=3&enabled=1&tags[]=one&tags[]=two&order=oldest',
+    )
     const state = run(() => useUrlState(schema()))
 
     expect(state.search.value).toBe('hello')
@@ -90,11 +94,15 @@ describe('useUrlState', () => {
     const { run } = await createHarness('/')
     const state = run(() => useUrlState(schema()))
 
-    await expect(state.patch({ missing: 'value' })).rejects.toThrow('Unknown URL state field: missing')
+    await expect(state.patch({ missing: 'value' })).rejects.toThrow(
+      'Unknown URL state field: missing',
+    )
   })
 
   it('clears selected fields and the whole schema', async () => {
-    const { router, run } = await createHarness('/?external=value&search=hello&page=2&enabled=1&order=oldest')
+    const { router, run } = await createHarness(
+      '/?external=value&search=hello&page=2&enabled=1&order=oldest',
+    )
     const state = run(() => useUrlState(schema()))
 
     await state.clear(['search', 'page'])
@@ -111,16 +119,20 @@ describe('useUrlState', () => {
   })
 
   it('resets all or selected fields to defaults', async () => {
-    const { router, run } = await createHarness('/?external=value&search=hello&page=2&enabled=1&order=oldest')
-    const state = run(() => useUrlState({
-      ...schema(),
-      order: {
-        type: 'string',
-        defaultValue: 'newest',
-        allowedValues: ['newest', 'oldest'],
-        omitDefault: false,
-      },
-    }))
+    const { router, run } = await createHarness(
+      '/?external=value&search=hello&page=2&enabled=1&order=oldest',
+    )
+    const state = run(() =>
+      useUrlState({
+        ...schema(),
+        order: {
+          type: 'string',
+          defaultValue: 'newest',
+          allowedValues: ['newest', 'oldest'],
+          omitDefault: false,
+        },
+      }),
+    )
 
     await state.reset(['order'])
     expect(router.currentRoute.value.query).toEqual({
@@ -139,7 +151,9 @@ describe('useUrlState', () => {
   })
 
   it('returns detached snapshot objects and reactive values', async () => {
-    const { router, run } = await createHarness('/?search=hello&page=2&tags[]=one')
+    const { router, run } = await createHarness(
+      '/?search=hello&page=2&tags[]=one',
+    )
     const state = run(() => useUrlState(schema()))
 
     expect(state.snapshot()).toEqual({
@@ -193,11 +207,15 @@ describe('useUrlState', () => {
   it('throws for unknown field types during setup', async () => {
     const { run } = await createHarness('/')
 
-    expect(() => run(() => useUrlState({
-      broken: {
-        type: 'object',
-        defaultValue: {},
-      },
-    }))).toThrow('Unsupported URL state type: object')
+    expect(() =>
+      run(() =>
+        useUrlState({
+          broken: {
+            type: 'object',
+            defaultValue: {},
+          },
+        }),
+      ),
+    ).toThrow('Unsupported URL state type: object')
   })
 })

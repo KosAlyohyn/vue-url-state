@@ -45,10 +45,12 @@ export function queryEquals(a, b) {
 
 export function valueEquals(a, b) {
   if (Array.isArray(a) || Array.isArray(b)) {
-    return Array.isArray(a)
-      && Array.isArray(b)
-      && a.length === b.length
-      && a.every((item, index) => item === b[index])
+    return (
+      Array.isArray(a) &&
+      Array.isArray(b) &&
+      a.length === b.length &&
+      a.every((item, index) => item === b[index])
+    )
   }
 
   return a === b

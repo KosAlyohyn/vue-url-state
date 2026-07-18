@@ -5,7 +5,8 @@ export default defineConfig({
     lib: {
       entry: 'src/index.js',
       name: 'VueUrlState',
-      fileName: (format) => (format === 'es' ? 'vue-url-state.js' : 'vue-url-state.cjs'),
+      fileName: (format) =>
+        format === 'es' ? 'vue-url-state.js' : 'vue-url-state.cjs',
       formats: ['es', 'cjs'],
     },
     rollupOptions: {

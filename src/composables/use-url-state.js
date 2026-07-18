@@ -1,5 +1,10 @@
 import { computed } from 'vue'
-import { createField, readField, serializeFieldValue } from '../core/create-field.js'
+
+import {
+  createField,
+  readField,
+  serializeFieldValue,
+} from '../core/create-field.js'
 import { createQueryUpdater } from '../core/update-query.js'
 import { cloneQuery, deleteFieldKeys } from '../helpers/query.js'
 import { useRouterContext } from '../helpers/router.js'
@@ -22,16 +27,26 @@ export function useUrlState(schema, options = {}) {
 
   state.clear = async (names) => {
     const selected = names ?? Object.keys(fields)
-    assertKnownFields(fields, Object.fromEntries(selected.map((name) => [name, null])))
+    assertKnownFields(
+      fields,
+      Object.fromEntries(selected.map((name) => [name, null])),
+    )
 
     return updateQuery(Object.fromEntries(selected.map((name) => [name, null])))
   }
 
   state.reset = async (names) => {
     const selected = names ?? Object.keys(fields)
-    assertKnownFields(fields, Object.fromEntries(selected.map((name) => [name, null])))
+    assertKnownFields(
+      fields,
+      Object.fromEntries(selected.map((name) => [name, null])),
+    )
 
-    return updateQuery(Object.fromEntries(selected.map((name) => [name, fields[name].defaultValue])))
+    return updateQuery(
+      Object.fromEntries(
+        selected.map((name) => [name, fields[name].defaultValue]),
+      ),
+    )
   }
 
   state.snapshot = () => snapshot(route, fields)

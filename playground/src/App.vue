@@ -1,7 +1,5 @@
 <script setup>
-  const links = [
-    { to: '/search', label: 'Search filters' },
-  ]
+const links = [{ to: '/search', label: 'Search filters' }]
 </script>
 
 <template>
@@ -13,11 +11,7 @@
       </div>
 
       <nav class="nav">
-        <router-link
-          v-for="link in links"
-          :key="link.to"
-          :to="link.to"
-        >
+        <router-link v-for="link in links" :key="link.to" :to="link.to">
           {{ link.label }}
         </router-link>
       </nav>

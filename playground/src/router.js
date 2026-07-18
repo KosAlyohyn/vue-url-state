@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import SearchFilters from './pages/SearchFilters.vue'
 
 export const router = createRouter({
