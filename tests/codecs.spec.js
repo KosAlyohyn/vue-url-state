@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
+
 import { parseArray, serializeArray } from '../src/codecs/array.js'
 import { parseBoolean, serializeBoolean } from '../src/codecs/boolean.js'
+import { getCodec } from '../src/codecs/index.js'
 import { parseNumber, serializeNumber } from '../src/codecs/number.js'
 import { parseString, serializeString } from '../src/codecs/string.js'
-import { getCodec } from '../src/codecs/index.js'
 
 describe('codecs', () => {
   it('reads string defaults and first array values', () => {
@@ -13,7 +14,10 @@ describe('codecs', () => {
   })
 
   it('validates allowed string values', () => {
-    const field = { defaultValue: 'newest', allowedValues: ['newest', 'oldest'] }
+    const field = {
+      defaultValue: 'newest',
+      allowedValues: ['newest', 'oldest'],
+    }
 
     expect(parseString('oldest', field)).toBe('oldest')
     expect(parseString('invalid', field)).toBe('newest')
@@ -40,13 +44,18 @@ describe('codecs', () => {
   })
 
   it('reads and writes string arrays', () => {
-    expect(parseArray(['one', 'two'], { defaultValue: [] })).toEqual(['one', 'two'])
+    expect(parseArray(['one', 'two'], { defaultValue: [] })).toEqual([
+      'one',
+      'two',
+    ])
     expect(parseArray(undefined, { defaultValue: [] })).toEqual([])
     expect(serializeArray(['one', 'two'])).toEqual(['one', 'two'])
     expect(serializeArray([])).toBeNull()
   })
 
   it('throws for unknown types', () => {
-    expect(() => getCodec('object')).toThrow('Unsupported URL state type: object')
+    expect(() => getCodec('object')).toThrow(
+      'Unsupported URL state type: object',
+    )
   })
 })

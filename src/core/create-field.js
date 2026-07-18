@@ -1,4 +1,5 @@
 import { computed } from 'vue'
+
 import { getCodec } from '../codecs/index.js'
 import { valueEquals } from '../helpers/equality.js'
 

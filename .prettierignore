@@ -1,0 +1,6 @@
+dist
+coverage
+node_modules
+playground/dist
+playground/node_modules
+package-lock.json

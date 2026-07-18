@@ -9,7 +9,10 @@ export function parseArray(raw, field) {
 
   const result = values.map((value) => String(value))
 
-  if (field.allowedValues && result.some((value) => !field.allowedValues.includes(value))) {
+  if (
+    field.allowedValues &&
+    result.some((value) => !field.allowedValues.includes(value))
+  ) {
     return field.defaultValue
   }
 

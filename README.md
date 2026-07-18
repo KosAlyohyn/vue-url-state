@@ -19,10 +19,7 @@ npm install vue vue-router
 ## Public API
 
 ```js
-export {
-  useUrlParam,
-  useUrlState,
-}
+export { useUrlParam, useUrlState }
 ```
 
 ## useUrlParam
@@ -296,10 +293,27 @@ The library is split into small modules:
 - `helpers/` contains schema normalization, query helpers, equality checks, and Vue Router context validation.
 - `composables/` exposes `useUrlParam` and `useUrlState`.
 
+## Development
+
+The repository uses a single root `eslint.config.js` for library source, tests, examples, and playground files.
+
+ESLint checks:
+
+- no `console.log`;
+- no unused variables;
+- import order, duplicate imports, and imports before executable code;
+- Vue recommended rules for `.vue` files.
+
+Prettier handles formatting through the root `.prettierrc`.
+
 ## Commands
 
 ```bash
 npm install
+npm run lint
+npm run lint:fix
+npm run format
+npm run format:check
 npm run test
 npm run build
 ```
