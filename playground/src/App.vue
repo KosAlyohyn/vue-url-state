@@ -1,5 +1,8 @@
 <script setup>
-const links = [{ to: '/search', label: 'Search filters' }]
+const links = [
+  { to: '/search', label: 'Search filters' },
+  { to: '/tag', label: 'Tag filters' },
+]
 </script>
 
 <template>
