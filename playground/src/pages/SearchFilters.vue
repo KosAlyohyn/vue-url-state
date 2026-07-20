@@ -7,66 +7,43 @@ const state = useUrlState({
     type: 'string',
     defaultValue: '',
   },
-  onlyOpen: {
-    type: 'boolean',
-    defaultValue: false,
-  },
-  docsOnly: {
-    type: 'boolean',
-    defaultValue: true,
-  },
 })
 
 const items = [
   {
     id: 1,
-    title: 'Open docs item that matches router search',
+    title: 'Router query guide',
     category: 'docs',
-    status: 'open',
   },
   {
     id: 2,
-    title: 'Open issue item that is hidden by docs only',
+    title: 'Search state cookbook',
     category: 'issues',
-    status: 'open',
   },
   {
     id: 3,
-    title: 'Closed pull request hidden by open filter',
+    title: 'Debugging route params',
     category: 'pull-requests',
-    status: 'closed',
   },
   {
     id: 4,
-    title: 'Closed docs item visible when open filter is off',
+    title: 'Docs for query aliases',
     category: 'docs',
-    status: 'closed',
   },
 ]
 
 const results = computed(() => {
   const query = state.query.value.trim().toLowerCase()
-  const onlyOpen = state.onlyOpen.value
-  const docsOnly = state.docsOnly.value
 
-  return items.filter((item) => {
-    const matchesQuery = !query || item.title.toLowerCase().includes(query)
-    const matchesStatus = !onlyOpen || item.status === 'open'
-    const matchesDocs = !docsOnly || item.category === 'docs'
-
-    return matchesQuery && matchesStatus && matchesDocs
-  })
+  return items.filter(
+    (item) =>
+      !query ||
+      item.title.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query),
+  )
 })
 
 const snapshot = computed(() => JSON.stringify(state.values.value, null, 2))
-
-function applyDocsPreset() {
-  state.patch({
-    query: 'router',
-    onlyOpen: true,
-    docsOnly: true,
-  })
-}
 
 function resetState() {
   state.reset()
@@ -81,9 +58,7 @@ function clearState() {
   <section class="page">
     <header class="page-header">
       <h2>Search filters</h2>
-      <p>
-        Basic URL-backed search state with a text query, booleans, and defaults.
-      </p>
+      <p>Basic URL-backed text search with one string parameter.</p>
     </header>
 
     <form class="panel" @submit.prevent>
@@ -92,22 +67,7 @@ function clearState() {
         <input v-model="state.query.value" placeholder="Search by title" />
       </label>
 
-      <div class="checkbox-row">
-        <label class="checkbox">
-          <input v-model="state.onlyOpen.value" type="checkbox" />
-          Only open
-        </label>
-
-        <label class="checkbox">
-          <input v-model="state.docsOnly.value" type="checkbox" />
-          Docs only
-        </label>
-      </div>
-
       <p class="actions">
-        <button type="button" @click="applyDocsPreset">
-          Apply docs preset
-        </button>
         <button type="button" @click="resetState">Reset filters</button>
         <button type="button" @click="clearState">Clear URL params</button>
       </p>
@@ -118,7 +78,7 @@ function clearState() {
       <ul class="result-list">
         <li v-for="item in results" :key="item.id">
           <span>{{ item.title }}</span>
-          <span>{{ item.category }} / {{ item.status }}</span>
+          <span>{{ item.category }}</span>
         </li>
       </ul>
     </section>
