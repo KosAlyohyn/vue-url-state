@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import BooleanFilters from './pages/BooleanFilters.vue'
 import SearchFilters from './pages/SearchFilters.vue'
+import TagFilters from './pages/TagFilters.vue'
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -13,6 +15,16 @@ export const router = createRouter({
       path: '/search',
       name: 'search',
       component: SearchFilters,
+    },
+    {
+      path: '/boolean',
+      name: 'boolean',
+      component: BooleanFilters,
+    },
+    {
+      path: '/tag',
+      name: 'tag',
+      component: TagFilters,
     },
   ],
 })

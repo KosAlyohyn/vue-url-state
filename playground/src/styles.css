@@ -35,9 +35,11 @@ button {
   padding: 8px 12px;
 }
 
-button.secondary {
-  background: white;
-  color: #1e5a72;
+button:disabled {
+  border-color: #b8c8d0;
+  background: #e8eef1;
+  color: #7d909a;
+  cursor: not-allowed;
 }
 
 input,
@@ -138,11 +140,16 @@ pre {
 
 .panel {
   display: grid;
-  gap: 18px;
+  gap: 12px;
   border: 1px solid #d8e0e7;
   border-radius: 8px;
   background: white;
   padding: 20px;
+}
+
+.panel h3,
+.panel p {
+  margin: 0;
 }
 
 .grid {
