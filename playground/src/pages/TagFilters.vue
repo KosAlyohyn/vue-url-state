@@ -55,17 +55,18 @@ const results = computed(() => {
 
 const snapshot = computed(() => JSON.stringify(state.values.value, null, 2))
 const currentQuery = computed(() => JSON.stringify(route.query, null, 2))
-const normalizedTags = computed(() =>
-  [...new Set([...availableTags, ...state.tags.value])].sort(),
-)
+const normalizedTags = computed(() => {
+  return [...new Set([...availableTags, ...state.tags.value])].sort()
+})
 const aliasTagsPreview = computed(
   () => `tags=${state.tags.value.join('&tags=')}`,
 )
-const hasTagQuery = computed(
-  () =>
+const hasTagQuery = computed(() => {
+  return (
     Object.prototype.hasOwnProperty.call(route.query, 'tags[]') ||
-    Object.prototype.hasOwnProperty.call(route.query, 'tags'),
-)
+    Object.prototype.hasOwnProperty.call(route.query, 'tags')
+  )
+})
 
 function writePrimaryFormat() {
   state.patch({

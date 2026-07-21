@@ -27,15 +27,15 @@ const items = [
   },
 ]
 
-const results = computed(() =>
-  items.filter((item) => item.visibleWhenEnabled === state.value.value),
-)
+const results = computed(() => {
+  return items.filter((item) => item.visibleWhenEnabled === state.value.value)
+})
 
 const currentQuery = computed(() => JSON.stringify(route.query, null, 2))
 const snapshot = computed(() => JSON.stringify(state.values.value, null, 2))
-const hasBooleanQuery = computed(() =>
-  Object.prototype.hasOwnProperty.call(route.query, 'value'),
-)
+const hasBooleanQuery = computed(() => {
+  return Object.prototype.hasOwnProperty.call(route.query, 'value')
+})
 const currentFormat = computed(() => {
   const rawValue = route.query.value
   const value = Array.isArray(rawValue) ? rawValue[0] : rawValue
