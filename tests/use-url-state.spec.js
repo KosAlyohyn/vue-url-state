@@ -204,6 +204,24 @@ describe('useUrlState', () => {
     expect(replace).toHaveBeenCalledTimes(1)
   })
 
+  it('preserves synchronous field assignments made before router navigation settles', async () => {
+    const { router, run } = await createHarness('/?external=value')
+    const state = run(() => useUrlState(schema()))
+
+    state.search.value = 'hello'
+    state.page.value = 2
+    state.enabled.value = true
+
+    await flushRouter()
+
+    expect(router.currentRoute.value.query).toEqual({
+      enabled: '1',
+      external: 'value',
+      page: '2',
+      search: 'hello',
+    })
+  })
+
   it('throws for unknown field types during setup', async () => {
     const { run } = await createHarness('/')
 
